@@ -819,6 +819,7 @@ Arguments:
   PROJECT             	# REQUIRED The project name
 
 Options:
+  --project-root=VALUE            	# Root directory for project, default: PROJECT
   --database=VALUE, -d VALUE      	# Database (mysql/mysql2/postgresql/postgres/sqlite/sqlite3), default: "sqlite"
   --application-name=VALUE        	# App name, default: "web"
   --application-base-url=VALUE    	# App base URL, default: "/"

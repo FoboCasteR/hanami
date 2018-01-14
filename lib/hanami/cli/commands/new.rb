@@ -261,6 +261,7 @@ module Hanami
         desc "Generate a new Hanami project"
         argument :project, required: true, desc: "The project name"
 
+        option :project_root,         desc: "Root directory for project, default: PROJECT"
         option :database,             desc: "Database (#{DatabaseConfig::SUPPORTED_ENGINES.keys.join('/')})", default: DatabaseConfig::DEFAULT_ENGINE, aliases: ["-d"]
         option :application_name,     desc: "App name", default: DEFAULT_APPLICATION_NAME
         option :application_base_url, desc: "App base URL", default: DEFAULT_APPLICATION_BASE_URL
@@ -283,6 +284,7 @@ module Hanami
         # rubocop:disable Metrics/MethodLength
         def call(project:, **options)
           project         = Utils::String.underscore(project)
+          project_root    = options.fetch(:project_root, project)
           database_config = DatabaseConfig.new(options[:database], project)
           test_framework  = TestFramework.new(hanamirc, options[:test])
           template_engine = TemplateEngine.new(hanamirc, options[:template])
@@ -308,7 +310,7 @@ module Hanami
 
           assert_project_name!(context)
 
-          directory = project_directory(project)
+          directory = project_directory(project_root)
           files.mkdir(directory)
 
           Dir.chdir(directory) do
